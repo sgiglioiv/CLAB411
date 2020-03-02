@@ -71,7 +71,7 @@ def pade_42(k, ps, cs):
     ta2=2*a*a
     tg2=2*g*g
     k2=k*k
-    mu2 = ta2*g4d2  + tg2*a4b2
+    mu2 = ta2*g4d2 + tg2*a4b2
     num = (k2 + ta2*k + a4b2) * (k2 + tg2*k + g4d2)
     den = a4b2 * g4d2 + mu2*k + w*w*k2
     return l * num / den
@@ -94,7 +94,7 @@ def pade_52(k, ps, cs):
     ta2=2*a*a
     tg2=2*g*g
     k2=k*k
-    mu2 = ta2*g4d2  + tg2*a4b2 + e*e*a4b2*g4d2
+    mu2 = ta2*g4d2 + tg2*a4b2 + e*e*a4b2*g4d2
     num = (k2 + ta2*k + a4b2) * (k2 + tg2*k + g4d2) * (1 + e*e*k)
     den = a4b2 * g4d2 + mu2*k + w*w*k2
     return l * num / den

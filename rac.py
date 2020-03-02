@@ -7,6 +7,8 @@ see JCP 143, 184102 (2015)
 
 
 import argparse
+from typing import List, Any, Union
+
 import numpy
 from scipy.optimize import minimize
 import matplotlib.pyplot as plt
@@ -87,7 +89,7 @@ def rac(ls, Es, E_range, guess, pr):
     if len(lbs) == 0:
         print ("no input data selected")
         return
-    sigmas=numpy.ones(len(Es))
+    sigmas = numpy.ones(len(Es))
     """  
     Jiri's 2015 notation: E = -kappa^2     
     """
@@ -146,10 +148,10 @@ def rac(ls, Es, E_range, guess, pr):
     if pr > 2:
         print ("------------------------------------------------")
     dg=0.0
-    ps=[dg, 1, aopt, bopt]
-    cs=["pade_31"]
+    ps =[dg, 1, aopt, bopt]
+    cs =["pade_31"]
     lg=lbs[0]/racu.pade_31(ks[0], ps, cs)
-    ps=[dg, lg, aopt, bopt]
+    ps =[dg, lg, aopt, bopt]
     if pr > 2:
         print ("[3,1] Guess d, l, a, b = ", ps)
     res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS', options={'gtol': 1e-6})
