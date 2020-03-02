@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d088553-2746-452a-80f4-99a294217b4e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/rSettings.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/rach.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/rach_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CLAB411.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CLAB411.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rac.py" beforeDir="false" afterPath="$PROJECT_DIR$/rac.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rac_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/rac_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +35,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
   <component name="RunManager">
     <configuration name="rac" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -75,6 +79,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="106" y="182" key="#Code_Folding" timestamp="1583105199203">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="106" y="182" key="#Code_Folding/0.0.1920.1040@0.0.1920.1040" timestamp="1583105199203" />
     <state x="652" y="184" key="#Notifications" timestamp="1583097809685">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -91,17 +99,41 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="714" y="120" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583097504671" />
-    <state x="721" y="163" key="SettingsEditor" timestamp="1583098194773">
+    <state x="1129" y="323" key="FileChooserDialogImpl" timestamp="1583109824049">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="721" y="163" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583098194773" />
+    <state x="1129" y="323" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1583109824049" />
+    <state width="1362" height="281" key="GridCell.Tab.0.bottom" timestamp="1583109831746">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583109831746" />
+    <state width="1362" height="281" key="GridCell.Tab.0.center" timestamp="1583109831746">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583109831746" />
+    <state width="1362" height="281" key="GridCell.Tab.0.left" timestamp="1583109831746">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583109831746" />
+    <state width="1362" height="281" key="GridCell.Tab.0.right" timestamp="1583109831746">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1362" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583109831746" />
+    <state x="721" y="163" key="SettingsEditor" timestamp="1583100457562">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="721" y="163" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583100457562" />
     <state x="661" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1583097385768">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="661" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583097385768" />
-    <state x="1114" y="21" width="799" height="1027" key="dock-window-1" timestamp="1583098195203">
+    <state x="1022" y="0" width="905" height="1047" key="dock-window-1" timestamp="1583109511796">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1114" y="21" width="799" height="1027" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1583098195203" />
+    <state x="1022" y="0" width="905" height="1047" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1583109511796" />
+    <state x="255" y="167" key="refactoring.ChangeSignatureDialog" timestamp="1583101811676">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="255" y="167" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583101811676" />
   </component>
 </project>
