@@ -268,15 +268,15 @@ def chi(params, kappas, lbs, sigmas, con_params):
 
     RETURNS
     -------
-    6. lamda : float
-               The evaluation of the Pade [5/3] approximant at the corresponding
-               kappa terms and parameters
+    6. chi2/len(kappas) : float
+                          This corresponds to the chi^2 value from eq. (6)
     """
     fn = funcs[con_params[0]]
     chi2 = 0
     weights = 1 / sigmas**2
     for i in range(len(kappas)):
         chi2 += ((lbs[i] - fn(kappas[i], params, con_params[1:])) * weights[i])**2
+
     return (chi2/len(kappas))
 
 

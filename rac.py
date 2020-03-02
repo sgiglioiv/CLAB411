@@ -19,7 +19,8 @@ def main():
     print ("R-ACCC")
     parser = argparse.ArgumentParser(description='Regularized ACCC')
     parser.add_argument("fname", type=str, 
-                        help="input data file; 1st column lambdas; then columns with energies")
+                        help="input data file; 1st column lambdas; then columns with "
+                             "energies")
     parser.add_argument("-s", action="store_true", dest="scale", default=False, 
                         help="scale input with Hartree to eV conversion factor") 
     parser.add_argument("-b", action="store_true", dest="invert", default=False, 
