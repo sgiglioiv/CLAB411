@@ -106,17 +106,8 @@ def rac(ls, Es, E_range, guess, pr):
     lps=numpy.zeros(nplt)
     ps = [lg, ag, bg]
     racu.graph(ks, kps, lbs, lps, ps, ["pade_21"], nplt, pr)
-    """
-    if pr > 4:
-        plt.plot(ks, lbs, marker='o', color='blue')
-        for i in range(nplt):
-            lps[i]=racu.pade_21(kps[i], ps, cs)
-        plt.plot(kps, lps, marker='', color="orange")
-        plt.xlabel('kappa')
-        plt.ylabel('lambda')
-        plt.title('Guess for [2,1] approximant')
-        plt.show()
-    """
+
+
     """
     fit a [2,1] Pade approximant
     """ 
@@ -175,7 +166,7 @@ def rac(ls, Es, E_range, guess, pr):
     eg=0.001
     # preopt delta, epsilson, and l; keep alpha and beta fixed
     ps=[lopt, dopt, eg]
-    cs=["pade_32", aopt, bopt]
+    cs=["ppade_32", aopt, bopt]
     if pr > 2:
         print ("[3,2] pre-guess l, d, e = "); print ("    ", ps)
     res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS')
@@ -183,21 +174,22 @@ def rac(ls, Es, E_range, guess, pr):
     lg=ps[0]
     dg=ps[1]
     eg=ps[2]
-    ps = [lg, dg, eg] 
+    ps = [lg, dg, eg, aopt, bopt]
+    cs = ["pade_32"]
     if pr > 2:
-        print ("[3,2] pre-opt = full guess l, d, e, a, b = "); print ("    ", ps, cs[1:])   
+        print ("[3,2] pre-opt = full guess l, d, e, a, b = "); print ("    ", ps)
     res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS', options={'gtol': 1e-6})
     ps = res.x
     if pr > 2:
-        print ("[3,2] full optimization    l, d, e, a, b = "); print ("    ", ps, cs[1:])
+        print ("[3,2] full optimization    l, d, e, a, b = "); print ("    ", ps)
     chi2 = racu.chi(ps, ks, lbs, sigmas, cs)
     if pr > 2:
         print ("[3,2] chi^2", chi2)
     lopt=ps[0]
     dopt=ps[1]
     eopt=ps[2]
-    aopt=cs[1]
-    bopt=cs[2]
+    aopt=ps[3]
+    bopt=ps[4]
     chis.append(chi2)
     racu.graph(ks, kps, lbs, lps, ps, cs, nplt, pr)
     racu.erG(aopt, bopt)
@@ -217,25 +209,26 @@ def rac(ls, Es, E_range, guess, pr):
     gg=0.5*numpy.sqrt(2.0)*(-2*Er + numpy.sqrt(4*Er**2 + G**2))**0.25
     dg=0.5*G/numpy.sqrt(-2*Er + numpy.sqrt(4*Er**2 + G**2))
     ps = [wg, gg, dg, 1]
-    cs = ["pade_42", aopt, bopt]
-    lg=lbs[0]/racu.pade_42(ks[0], ps, cs[1:])
+    cs = ["ppade_42", aopt, bopt]
+    lg=lbs[0]/racu.ppade_42(ks[0], ps, cs[1:])
     # preopt gamma, delta, omega, and l; keep alpha and beta fixed
     ps=[wg, gg, dg, lg]
     if pr > 2:
-        print ("[4,2] pre-guess w, g, d, l = "); print ("    ", ps)
+        print ("[4,2] pre-guess w, g, d, l = "); print ("    ", ps[:4])
     res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS')
     ps = res.x
     wg=ps[0]
     gg=ps[1]
     dg=ps[2]
     lg=ps[3]
-    ps = [wg, gg, dg, lg] 
+    ps = [wg, gg, dg, lg, aopt, bopt]
     if pr > 2:
-        print ("[4,2] pre-opt = full guess w, g, d, l, a, b = "); print ("    ", ps, cs[1:])   
+        print ("[4,2] pre-opt = full guess w, g, d, l, a, b = "); print ("    ", ps)
+    cs = ["pade_42"]
     res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS', options={'gtol': 1e-6})
     ps = res.x
     if pr > 2:
-        print ("[4,2] Full optimization    w, g, d, l, a, b = "); print ("    ", ps, cs[1:])
+        print ("[4,2] Full optimization    w, g, d, l, a, b = "); print ("    ", ps)
     chi2 = racu.chi(ps, ks, lbs, sigmas, cs)
     if pr > 2:
         print ("[4,2] chi^2", chi2)
@@ -243,8 +236,8 @@ def rac(ls, Es, E_range, guess, pr):
     gopt=ps[1]
     dopt=ps[2]
     lopt=ps[3]
-    aopt=cs[1]
-    bopt=cs[2]
+    aopt=ps[4]
+    bopt=ps[5]
     chis.append(chi2)
     racu.graph(ks, kps, lbs, lps, ps, cs, nplt, pr)
     racu.erG(aopt, bopt)

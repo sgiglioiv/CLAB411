@@ -6,8 +6,8 @@ see JCP 143, 184102 (2015)
 """
 
 
-import argparge
-import matplotlin.pyplot as plt
+import argparse
+import matplotlib.pyplot as plt
 import numpy as np
 import rach_utils as racu
 from scipy.optimize import minimize
@@ -66,7 +66,7 @@ def main():
     data = np.lib.loadtext(arguments.fname)
     lambdas = data[:, 0]#ls
     energys = data[:, 1:]#Es
-    for i in range(len(lambads)):
+    for i in range(len(lambdas)):
         energys[i, :]
 
     """Processes the -s, -b, and -vv1 arguments"""

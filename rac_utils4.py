@@ -35,7 +35,25 @@ def pade_31(k, ps, cs):
     ddk=d*d*k
     num = (k*k + aak2 + a4b2) * (1 + ddk)
     den = a4b2 + aak2 + ddk*a4b2
-    return l * num / den 
+    return l * num / den
+
+
+def ppade_32(k, ps, cs):
+    """
+    Pade [3,2] as given in 2016 correction paper
+    """
+
+    l = ps[0]
+    d = ps[1]
+    e = ps[2]
+    a = cs[0]
+    b = cs[1]
+    a4b2 = a * a * a * a + b * b
+    aak2 = a * a * k * 2
+    ddk = d * d * k
+    num = (k * k + aak2 + a4b2) * (1 + ddk)
+    den = a4b2 + aak2 + ddk * a4b2 + e * e * k * k
+    return l * num / den
 
 def pade_32(k, ps, cs):
     """ 
@@ -45,14 +63,36 @@ def pade_32(k, ps, cs):
     l = ps[0]
     d = ps[1]
     e = ps[2]
-    a = cs[0]
-    b = cs[1]
+    a = ps[3]
+    b = ps[4]
     a4b2=a*a*a*a + b*b
     aak2=a*a*k*2
     ddk=d*d*k
     num = (k*k + aak2 + a4b2) * (1 + ddk)
     den = a4b2 + aak2 + ddk*a4b2 + e*e*k*k
-    return l * num / den 
+    return l * num / den
+
+def ppade_42(k, ps, cs):
+    """
+    Pade [4,2] in eqs.(10) and (11) has several typos
+    this is now the correct formula from the 2016 paper
+    """
+
+    l = ps[3]
+    g = ps[1]
+    d = ps[2]
+    w = ps[0]
+    a = cs[0]
+    b = cs[1]
+    a4b2 = a * a * a * a + b * b
+    g4d2 = g * g * g * g + d * d
+    ta2 = 2 * a * a
+    tg2 = 2 * g * g
+    k2 = k * k
+    mu2 = ta2 * g4d2 + tg2 * a4b2
+    num = (k2 + ta2 * k + a4b2) * (k2 + tg2 * k + g4d2)
+    den = a4b2 * g4d2 + mu2 * k + w * w * k2
+    return l * num / den
 
 def pade_42(k, ps, cs):
     """ 
@@ -64,8 +104,8 @@ def pade_42(k, ps, cs):
     g = ps[1]
     d = ps[2]
     w = ps[0]
-    a = cs[0]
-    b = cs[1]
+    a = ps[4]
+    b = ps[5]
     a4b2=a*a*a*a + b*b
     g4d2=g*g*g*g + d*d
     ta2=2*a*a
@@ -85,10 +125,10 @@ def pade_52(k, ps, cs):
     l = ps[0]
     e = ps[0]
     w = ps[0]
+    d = ps[0]
+    g = ps[0]
     a = cs[0]
     b = cs[0]
-    d = cs[0]
-    g = cs[0]
     a4b2=a*a*a*a + b*b
     g4d2=g*g*g*g + d*d
     ta2=2*a*a
@@ -125,7 +165,9 @@ def pade_53(k, ps, cs):
 
 fs={"pade_21": pade_21,
     "pade_31": pade_31,
+    "ppade_32": ppade_32,
     "pade_32": pade_32,
+    "ppade_42": ppade_42,
     "pade_42": pade_42,
     "pade_52": pade_52,
     "pade_53": pade_53
