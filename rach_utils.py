@@ -5,13 +5,66 @@ Jiri Horacek's Regularized Analytic Continuation
 See JCP 143, 184102 (2015)
 """
 from typing import Any, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 Ers = []
 Gs = []
-chi2 = []
+chis = []
+
+
+def decorator_print(orginal_function):
+    """
+    This function wraps another function to give it functionality to print or not
+    """
+    def wrapper_function(*args, print_lev):
+        if mrk <= print_lev:
+            return origingal_function(*args)
+    return wrapper_function
+
+##############################3
+def select_energies(ls, Es, E_range, pr):
+    """ 
+    select all energies in the first column that lie within E_range
+    """
+    n_ene = numpy.shape(Es)[1]
+    n_ls = numpy.shape(ls)[0]
+    print ("No. of lambda-points: ", n_ls)
+    E_min = E_range[0]
+    E_max = E_range[1]
+    print ("Input energy range: {0:.4f} to {1:.4f}".format(E_min, E_max)) 
+    if E_max > 0 : 
+        print ("Upper energy range is", E_max)
+        print ("Only negative energies may be used.")
+        print ("Upper range is reset to 0")
+        E_max = 0
+    """ find upper limit """
+    for i in range(n_ls):
+        i_max = i
+        if Es[i,0] < E_max:
+            break
+    """ find lower limit """
+    for i in range(n_ls):
+        i_min = n_ls - 1 - i
+        if Es[i_min,0] > E_min:
+            break
+
+    print ("Largest  energy used is {0:.4f} (index {1:d})".format(Es[i_max,0],i_max))
+    print ("Smallest energy used is {0:.4f} (index {1:d})".format(Es[i_min,0],i_min))
+    Ebs = Es[i_max:i_min+1,0] 
+    lbs = ls[i_max:i_min+1]
+    print ("No. of points used:", len(lbs))
+
+    if pr > 3:
+        for i in range(n_ene):
+            plt.plot(ls, Es[:,i], marker='d', color='orange')
+        plt.plot(lbs, Ebs, marker='o', color='blue')
+        plt.title('raw data')
+        plt.show()
+
+    return lbs, Ebs
+##############################################33
 
 
 def pade_21(kappas, params, con_params):
@@ -202,8 +255,7 @@ def pade_53(kappas, params, con_params):
     2. params : object
                     List of parameters
     3. con_params : list
-                    List of parameters to be kept constant with the first term being
-                    the Pade approximant used
+                    List of paramters to be constant with the first term being the Pade approximant used
 
     RETURNS
     -------
@@ -258,10 +310,10 @@ def chi(params, kappas, lbs, sigmas, con_params):
                 List of parameters
     2. kappas : object
                 List of kappa values
-    3. lbs : object
-             not sure what these are
+    3. lambas : object
+                List of lambda values
     4. sigmas : object
-                again not sure
+                Used to calculate the weights
     5. con_params : list
                     List of parameters to be kept constant with the first term being
                     the Pade approximant used
@@ -275,12 +327,26 @@ def chi(params, kappas, lbs, sigmas, con_params):
     chi2 = 0
     weights = 1 / sigmas**2
     for i in range(len(kappas)):
-        chi2 += ((lbs[i] - fn(kappas[i], params, con_params[1:])) * weights[i])**2
-
+        chi2 += ((lambdas[i] - fn(kappas[i], params, con_params[1:])) * weights[i])**2
     return (chi2/len(kappas))
 
 
-def graph(kappas, kps, lbs, lps, params, con_params, nplt, pr):
+@decorator_print
+def display(orignial_function):
+    def wrapper_function(*args, pr):
+        if mrk <= pr:
+            return original_function(*args)
+    return wrapper_function
+
+@decorater_print
+def pregraph(n_ene, lambdas, energys, msg):
+    for i in range(n_ene):
+        plt.plot(lambdas, energys[:,i], marker= 'd', color= 'orange')
+    plt.title(msg)
+    plt.show()
+
+@decorator_print
+def graph(kappas, kap_points, lambdas, lam_points, params, con_params, point_plot, pr):
     """
         This function creates a graph of kappa values versus the lambda values for
         use in determining if the program is function correctly
@@ -289,19 +355,19 @@ def graph(kappas, kps, lbs, lps, params, con_params, nplt, pr):
     −−−−−−−−−−
     1. kappas : object
                 List of kappas
-    2. kps : object
-                not sure
-    3. lbs : object
-             not sure what these are
-    4. lps : object
-                again not sure
+    2. kap_points : object
+                    Number of points used to make the curve seem smooth
+    3. lambdas : object
+                 List of lambdas
+    4. lam_points : object
+                    Number of points used to make the curve seem smotth
     5. params : object
                 List of parameters
     6. con_params : list
                     List of parameters to be kept constant with the first term being
                     the Pade approximant used
-    7. nplt : object
-              no idea
+    7. point_plot : object
+                    The number of points used to plot the respective graphs
     8. pr : print level
             probably take this one out
 
@@ -310,14 +376,13 @@ def graph(kappas, kps, lbs, lps, params, con_params, nplt, pr):
     9. None, but does produce graphs
     """
     fn = funcs[con_params[0]]
-    if pr > 4:
-        plt.plot(kappas, lbs, marker='o', color='blue')
-        for i in range(nplt):
-            lps[i]=fn(kps[i], params, con_params[1:])
-        plt.plot(kps, lps, marker='', color="orange")
+    plt.plot(kappas, lambdas, marker='o', color='blue')
+        for i in range(point_plot):
+            lam_points[i]=fn(kap_points[i], params, con_params[1:])
+        plt.plot(kappas, lambdas, marker='', color="orange")
         plt.xlabel('kappa')
         plt.ylabel('lambda')
-        #plt.title(cs[0])
+        plt.title(cs[0])
         plt.show()
 
 
@@ -372,3 +437,19 @@ def getGs():
     4. The list of gammas
     """
     return Gs
+
+"""
+def getchis():
+    ""
+    This function only returns the list of gammas
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. None
+
+    RETURNS
+    -------
+    4. The list of gammas
+    ""
+    return chis
+"""
