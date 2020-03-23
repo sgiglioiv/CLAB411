@@ -1,4 +1,8 @@
 #!/home/thomas/psi4conda/bin/python
+"""
+This is the code I'm trying rewrite completely fully sourced. And working at least as well as the old code.
+"""
+
 
 """
 Jiri Horacek's Regularized Analytic Continuation
