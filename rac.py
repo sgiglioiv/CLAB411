@@ -232,7 +232,7 @@ def rac(ls, Es, E_range, guess, pr):
     chi2 = racu.chi(ps, ks, lbs, sigmas, cs)
     if pr > 2:
         print ("[4,2] chi^2", chi2)
-    eopt=ps[0]
+    wopt=ps[0]
     gopt=ps[1]
     dopt=ps[2]
     lopt=ps[3]
@@ -248,26 +248,128 @@ def rac(ls, Es, E_range, guess, pr):
     the second resonance guess is 4*Er, 4*Gamma, 
     and the mixing factor epsilon is 1.0
     """
-    """    
+
     if pr > 2:
         print ("------------------------------------------------")
-    Er*=20
-    G*=4
-    wg=0.1
+    Ers = racu.getErs()
+    Gs = racu.getGs()
+    Er = Ers[-1] * 20
+    G = Gs[-1] * 4
+    eg = 0.1
+    wg= wopt * 0.05
     gg=0.5*numpy.sqrt(2.0)*(-2*Er + numpy.sqrt(4*Er**2 + G**2))**0.25
     dg=0.5*G/numpy.sqrt(-2*Er + numpy.sqrt(4*Er**2 + G**2))
-    ps = [wg, gg, dg, 1]
-    cs = ["pade_42", aopt, bopt]
-    lg=lbs[0]/racu.pade_42(ks[0], ps, cs[1:])
-    # preopt gamma, delta, omega, and l; keep alpha and beta fixed
-    """
+    ps = [eg, wg, gg, dg, 1]
+    cs = ["ppade_52", aopt, bopt]
+    lg = lbs[0]/racu.ppade_52(ks[0], ps, cs[1:])
+    # preopt epsilon, gamma, delta, omega, and l; keep alpha and beta fixed
+    ps = [eg, wg, gg, dg, lg]
+    if pr > 2:
+        print ("[5,2] pre-guess e, w, g, d, l = "); print ("    ", ps[:5])
+    res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS')
+    ps = res.x
+    eg=ps[0]
+    wg=ps[1]
+    gg=ps[2]
+    dg=ps[3]
+    lg=ps[4]
+    ps = [eg, wg, gg, dg, lg, aopt, bopt]
+    if pr > 2:
+        print ("[5,2] pre-opt = full guess e, w, g, d, l, a, b = "); print ("    ", ps)
+    cs=["pade_52"]
+    res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS',
+                   options={'gtol': 1e-6})
+    ps = res.x
+    if pr > 2:
+        print ("[5,2] Full optimization    e, w, g, d, l, a, b = "); print ("    ", ps)
+    chi2 = racu.chi(ps, ks, lbs, sigmas, cs)
+    if pr > 2:
+        print("[5,2] chi^2", chi2)
+    eopt = ps[0]
+    wopt = ps[1]
+    gopt = ps[2]
+    dopt = ps[3]
+    lopt = ps[4]
+    aopt = ps[5]
+    bopt = ps[6]
+    chis.append(chi2)
+    racu.graph(ks, kps, lbs, lps, ps, cs, nplt, pr)
+    racu.erG(aopt, bopt)
+
+
     """
     fit a [5,3] Pade approximant
     the second resonance guess is 4*Er, 4*Gamma, 
     and the mixing factor epsilon is 1.0
     """
 
-    pade = ["Pade [2,1]", "Pade [3,1]", "Pade [3,2]", "Pade [4,2]"]
+    if pr > 2:
+        print ("------------------------------------------------")
+    Ers = racu.getErs()
+    Gs = racu.getGs()
+    Er = Ers[-1] * 20
+    G = Gs[-1] * 4
+    zg = 0.1
+    eg = eopt * 0.05
+    wg = wopt * 0.05
+    gg = 0.5 * numpy.sqrt(2.0) * (-2 * Er + numpy.sqrt(4 * Er ** 2 + G ** 2)) ** 0.25
+    dg = 0.5 * G / numpy.sqrt(-2 * Er + numpy.sqrt(4 * Er ** 2 + G ** 2))
+    ps = [zg, eg, wg, 1]
+    cs = ["pppade_53", gg, dg, aopt, bopt]
+    lg = lbs[0] / racu.pppade_53(ks[0], ps, cs[1:])
+    # pre-pre-opt zeta, epsilon, omega, and l; keep alpha, beta, gamma, and delta
+    # fixed
+    ps = [zg, eg, wg, lg]
+    if pr > 2:
+        print ("[5,3] pre-pre-guess z, e, w, l = "); print ("    ", ps[:4])
+    res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS')
+    ps = res.x
+    zg = ps[0]
+    eg = ps[1]
+    wg = ps[2]
+    lg = ps[3]
+    #pre-opt zeta, epsilon, omega, beta, gamma, and l, alpha and beta fixed
+    ps = [zg, eg, wg, gg, dg, lg]
+    if pr > 2:
+        print ("[5,3] pre-guess z, e, w, g, d, l = "); print ("    ", ps[:6])
+    cs = ["ppade_53", aopt, bopt]
+    res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS')
+    ps = res.x
+    zg = ps[0]
+    eg = ps[1]
+    wg = ps[2]
+    gg = ps[3]
+    dg = ps[4]
+    lg = ps[5]
+    ps = [zg, eg, wg, gg, dg, lg, aopt, bopt]
+    if pr > 2:
+        print ("[5,3] pre-opt = full guess z, e, w, g, d, l, a, b = "); print ("    ",
+                                                                              ps)
+    cs=["pade_53"]
+    res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS',
+                   options={'gtol': 1e-6})
+    ps = res.x
+    if pr > 2:
+        print("[5,3] Full optimization   z, e, w, g, d, l, a, b = ");
+        print("    ", ps)
+    chi2 = racu.chi(ps, ks, lbs, sigmas, cs)
+    if pr > 2:
+        print("[5,3] chi^2", chi2)
+    zopt = ps[0]
+    eopt = ps[1]
+    wopt = ps[2]
+    gopt = ps[3]
+    dopt = ps[4]
+    lopt = ps[5]
+    aopt = ps[6]
+    bopt = ps[7]
+    chis.append(chi2)
+    racu.graph(ks, kps, lbs, lps, ps, cs, nplt, pr)
+    racu.erG(aopt, bopt)
+
+
+    pade = ["Pade [2,1]", "Pade [3,1]", "Pade [3,2]", "Pade [4,2]", "Pade [5,2]",
+            "Pade [5,3]"]
     Ers = racu.getErs()
     Gs = racu.getGs()
     print ()
