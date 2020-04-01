@@ -1,7 +1,7 @@
 #!/home/thomas/psi4conda/bin/python
 """
-Dr. Sommerfeld's original code with the print statements corrected
-Used for reference to make sure future code is, at least, producing the same numbers
+Dr. Sommerfeld's original code, in which the print statements were broken
+Only for reference, as the code does not run
 """
 """
 Jiri Horacek's regularized analytic continuation
@@ -10,16 +10,14 @@ see JCP 143, 184102 (2015)
 
 
 import argparse
-
-import matplotlib.pyplot as plt
 import numpy
 from scipy.optimize import minimize
-
+import matplotlib.pyplot as plt
 
 def main():
 
     au2eV = 27.2113845
-    print ("R-ACCC")
+    print "R-ACCC"
     parser = argparse.ArgumentParser(description='Regularized ACCC')
     parser.add_argument("fname", type=str, 
                         help="input data file; 1st column lambdas; then columns with energies")
@@ -62,7 +60,7 @@ def main():
         elif arguments.emin > 0:
             Emax = -arguments.emin
             Emin = -99.0
-    print (Emin, Emax)
+    print Emin, Emax
     if arguments.voronoi1:
         n_ene = numpy.shape(Es)[1]
         for i in range(n_ene):
@@ -86,7 +84,7 @@ def rac(ls, Es, E_range, guess):
     global ks, lbs, sigmas 
     lbs, Ebs = select_energies(ls, Es, E_range)
     if len(lbs) == 0:
-        print ("no input data selected")
+        print "no input data selected"
         return
     sigmas=numpy.ones(len(Es))
     """  
@@ -116,14 +114,14 @@ def rac(ls, Es, E_range, guess):
     """
     fit a [2,1] Pade approximant
     """ 
-    print ("------------------------------------------------")
+    print "------------------------------------------------"
     popts = [lg, ag, bg]
-    print ("[2,1] Guess l, a, b = ", popts) 
+    print "[2,1] Guess l, a, b = ", popts 
     res = minimize(chi2_21, popts, method='BFGS', options={'gtol': 1e-6})
     popts = res.x
-    print ("[2,1] Opt   l, a, b = ", popts)
+    print "[2,1] Opt   l, a, b = ", popts
     chi2 = chi2_21(popts)
-    print ("[2,1] chi^2", chi2)
+    print "[2,1] chi^2", chi2
     lopt=popts[0]
     aopt=popts[1]
     bopt=popts[2]
@@ -143,16 +141,16 @@ def rac(ls, Es, E_range, guess):
     """
     fit a [3,1] Pade approximant
     """
-    print ("------------------------------------------------")
+    print "------------------------------------------------"
     dg=0.0
     lg=lbs[0]/pade_31(ks[0],1,aopt,bopt,dg)
     popts=[dg, lg, aopt, bopt]
-    print ("[3,1] Guess d, l, a, b = ", popts)
+    print "[3,1] Guess d, l, a, b = ", popts
     res = minimize(chi2_31, popts, method='BFGS', options={'gtol': 1e-6})
     popts = res.x
-    print ("[3,1] Opt   d, l, a, b = ", popts)
+    print "[3,1] Opt   d, l, a, b = ", popts
     chi2 = chi2_31(popts)
-    print ("[3,1] chi^2", chi2)
+    print "[3,1] chi^2", chi2
     dopt=popts[0]
     lopt=popts[1]
     aopt=popts[2]
@@ -173,23 +171,23 @@ def rac(ls, Es, E_range, guess):
     """
     fit a [3,2] Pade approximant
     """
-    print ("------------------------------------------------")
+    print "------------------------------------------------"
     eg=0.001
     # preopt delta, epsilson, and l; keep alpha and beta fixed
     popts=[lopt, dopt, eg]
-    print ("[3,2] pre-guess l, d, e = "); print ("    ", popts)
+    print "[3,2] pre-guess l, d, e = "; print "    ", popts
     res = minimize(chi2_32_pre, popts, args=(aopt,bopt), method='BFGS')
     popts = res.x
     lg=popts[0]
     dg=popts[1]
     eg=popts[2]
     popts = [lg, dg, eg, aopt, bopt] 
-    print ("[3,2] pre-opt = full guess l, d, e, a, b = "); print ("    ", popts)
+    print "[3,2] pre-opt = full guess l, d, e a, b = "; print "    ", popts   
     res = minimize(chi2_32, popts, method='BFGS', options={'gtol': 1e-6})
     popts = res.x
-    print ("[3,2] full optimization    l, d, e, a, b = "); print ("    ", popts)
+    print "[3,2] full optimization    l, d, e, a, b = "; print "    ", popts
     chi2 = chi2_32(popts)
-    print ("[3,2] chi^2", chi2)
+    print "[3,2] chi^2", chi2
     lopt=popts[0]
     dopt=popts[1]
     eopt=popts[2]
@@ -213,7 +211,7 @@ def rac(ls, Es, E_range, guess):
     the second resonance guess is 4*Er, 4*Gamma, 
     and the mixing factor epsilon is 1.0
     """
-    print ("------------------------------------------------")
+    print "------------------------------------------------"
     Er*=20
     G*=4
     wg=0.1
@@ -222,7 +220,7 @@ def rac(ls, Es, E_range, guess):
     lg=lbs[0]/pade_42(ks[0],1,aopt,bopt,gg,dg,wg)
     # preopt gamma, delta, omega, and l; keep alpha and beta fixed
     popts=[wg, gg, dg, lg]
-    print ("[4,2] pre-guess w, g, d, l = "); print ("    ", popts)
+    print "[4,2] pre-guess w, g, d, l = "; print "    ", popts
     res = minimize(chi2_42_pre, popts, args=(aopt,bopt), method='BFGS')
     popts = res.x
     wg=popts[0]
@@ -230,12 +228,12 @@ def rac(ls, Es, E_range, guess):
     dg=popts[2]
     lg=popts[3]
     popts = [wg, gg, dg, lg, aopt, bopt] 
-    print ("[4,2] pre-opt = full guess w, g, d, l, a, b = "); print ("    ", popts)   
+    print "[4,2] pre-opt = full guess w, g, d, l, a, b = "; print "    ", popts   
     res = minimize(chi2_42, popts, method='BFGS', options={'gtol': 1e-6})
     popts = res.x
-    print ("[4,2] Full optimization    w, g, d, l, a, b = "); print ("    ", popts)
+    print "[4,2] Full optimization    w, g, d, l, a, b = "; print "    ", popts
     chi2 = chi2_42(popts)
-    print ("[4,2] chi^2", chi2)
+    print "[4,2] chi^2", chi2
     eopt=popts[0]
     gopt=popts[1]
     dopt=popts[2]
@@ -257,13 +255,13 @@ def rac(ls, Es, E_range, guess):
     chis.append(chi2)
 
     pade = ["Pade [2,1]", "Pade [3,1]", "Pade [3,2]", "Pade [4,2]"]
-    print ()
-    print ("----------------------------------------------------")
-    print ("                Er       Gamma           chi^2      ")
-    print ("----------------------------------------------------")
+    print
+    print "----------------------------------------------------"
+    print "                Er       Gamma           chi^2      "
+    print "----------------------------------------------------"
     for i in range(len(Ers)):
-        print ("{0:s}  {1:8.4f}   {2:11.2e}     {3:11.2e}"\
-            .format(pade[i], Ers[i], Gs[i], chis[i]))
+        print "{0:s}  {1:8.4f}   {2:11.2e}     {3:11.2e}"\
+            .format(pade[i], Ers[i], Gs[i], chis[i])
 
 
 
@@ -418,14 +416,14 @@ def select_energies(ls, Es, E_range):
     """
     n_ene = numpy.shape(Es)[1]
     n_ls = numpy.shape(ls)[0]
-    print ("No. of lambda-points: ", n_ls)
+    print "No. of lambda-points: ", n_ls
     E_min = E_range[0]
     E_max = E_range[1]
-    print ("Input energy range: {0:.4f} to {1:.4f}".format(E_min, E_max)) 
+    print "Input energy range: {0:.4f} to {1:.4f}".format(E_min, E_max) 
     if E_max > 0 : 
-        print ("Upper energy range is", E_max)
-        print ("Only negative energies may be used.")
-        print ("Upper range is reset to 0")
+        print "Upper energy range is", E_max
+        print "Only negative energies may be used."
+        print "Upper range is reset to 0"
         E_max = 0
     """ find upper limit """
     for i in range(n_ls):
@@ -438,11 +436,11 @@ def select_energies(ls, Es, E_range):
         if Es[i_min,0] > E_min:
             break
 
-    print ("Largest  energy used is {0:.4f} (index {1:d})".format(Es[i_max,0],i_max))
-    print ("Smallest energy used is {0:.4f} (index {1:d})".format(Es[i_min,0],i_min))
+    print "Largest  energy used is {0:.4f} (index {1:d})".format(Es[i_max,0],i_max)
+    print "Smallest energy used is {0:.4f} (index {1:d})".format(Es[i_min,0],i_min)
     Ebs = Es[i_max:i_min+1,0] 
     lbs = ls[i_max:i_min+1]
-    print ("No. of points used:", len(lbs))
+    print "No. of points used:", len(lbs)
 
     for i in range(n_ene):
         plt.plot(ls, Es[:,i], marker='d', color='orange')

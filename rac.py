@@ -1,5 +1,7 @@
 #!/home/thomas/psi4conda/bin/python
-
+"""
+Current running version of the code
+"""
 """
 Jiri Horacek's regularized analytic continuation
 see JCP 143, 184102 (2015)
@@ -83,7 +85,7 @@ def rac(ls, Es, E_range, guess, pr):
     main driver of R-ACCC procedure 
     """
     global ks, lbs, sigmas 
-    lbs, Ebs = select_energies(ls, Es, E_range, pr)
+    lbs, Ebs = racu.select_energies(ls, Es, E_range, pr)
     if len(lbs) == 0:
         print ("no input data selected")
         return
@@ -380,49 +382,6 @@ def rac(ls, Es, E_range, guess, pr):
         print ("{0:s}  {1:8.4f}   {2:11.2e}     {3:11.2e}"\
             .format(pade[i], Ers[i], Gs[i], chis[i]))
 
-
-
-
-def select_energies(ls, Es, E_range, pr):
-    """ 
-    select all energies in the first column that lie within E_range
-    """
-    n_ene = numpy.shape(Es)[1]
-    n_ls = numpy.shape(ls)[0]
-    print ("No. of lambda-points: ", n_ls)
-    E_min = E_range[0]
-    E_max = E_range[1]
-    print ("Input energy range: {0:.4f} to {1:.4f}".format(E_min, E_max)) 
-    if E_max > 0 : 
-        print ("Upper energy range is", E_max)
-        print ("Only negative energies may be used.")
-        print ("Upper range is reset to 0")
-        E_max = 0
-    """ find upper limit """
-    for i in range(n_ls):
-        i_max = i
-        if Es[i,0] < E_max:
-            break
-    """ find lower limit """
-    for i in range(n_ls):
-        i_min = n_ls - 1 - i
-        if Es[i_min,0] > E_min:
-            break
-
-    print ("Largest  energy used is {0:.4f} (index {1:d})".format(Es[i_max,0],i_max))
-    print ("Smallest energy used is {0:.4f} (index {1:d})".format(Es[i_min,0],i_min))
-    Ebs = Es[i_max:i_min+1,0] 
-    lbs = ls[i_max:i_min+1]
-    print ("No. of points used:", len(lbs))
-
-    if pr > 3:
-        for i in range(n_ene):
-            plt.plot(ls, Es[:,i], marker='d', color='orange')
-        plt.plot(lbs, Ebs, marker='o', color='blue')
-        plt.title('raw data')
-        plt.show()
-
-    return lbs, Ebs
 
 
 if __name__ == "__main__":
