@@ -15,7 +15,31 @@ Gs = []
 chis = []
 
 def pade_21(k, ps, cs):
-    """ Pade [2.1] eq.(2) """
+    """
+    This function calculates the [2/1] Pade approximant
+    Pade [2/1] eq.(2)
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                alpha(a)
+                                                                beta(b)
+                                                                lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds no parameters constant*
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [2/1] approximant at the corresponding
+               kappa terms and parameters
+    """
     l = ps[0]
     a = ps[1]
     b = ps[2]
@@ -24,10 +48,32 @@ def pade_21(k, ps, cs):
     return l*(k*k + aak2 + a4b2) / (a4b2 + aak2)
     
 def pade_31(k, ps, cs):
-    """ 
-    Pade [3,1] eq.(9) corrected by missing factor 2 in a^2k terms 
     """
-    
+    This function calculates the [3/1] Pade approximant
+    Pade [3/1] eq.(9) corrected by missing factor 2 in a^2k terms
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                    List of kappa terms
+    2. ps : object
+                    List of parameters
+                    *This function optimizes the following parameters*
+                                                                alpha(a)
+                                                                beta(b)
+                                                                delta(d)
+                                                                lambda(l)
+    3. cs : list
+                    List of parameters to be kept constant with the first term being
+                    the Pade approximant used
+                    *This function holds no parameters constant*
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [3/1] approximant at the corresponding
+               kappa terms and parameters
+    """
     d = ps[0]
     l = ps[1]
     a = ps[2]
@@ -39,12 +85,34 @@ def pade_31(k, ps, cs):
     den = a4b2 + aak2 + ddk*a4b2
     return l * num / den
 
-
 def ppade_32(k, ps, cs):
     """
-    Pade [3,2] as given in 2016 correction paper
-    """
+    This function calculates the pre-fit for the [3/2] Pade approximant
+    Pade [3/2] as given in 2016 correction paper
 
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                delta(d)
+                                                                epsilon(e)
+                                                                lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds the following parameters constant*
+                                                                    alpha(a)
+                                                                    beta(b)
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [3/2] approximant at the corresponding
+               kappa terms and parameters
+    """
     l = ps[0]
     d = ps[1]
     e = ps[2]
@@ -58,10 +126,33 @@ def ppade_32(k, ps, cs):
     return l * num / den
 
 def pade_32(k, ps, cs):
-    """ 
-    Pade [3,2] as given in 2016 correction paper
     """
-    
+    This function calculates the [3/2] Pade approximant
+    Pade [3/2] as given in 2016 correction paper
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                alpha(a)
+                                                                beta(b)
+                                                                delta(d)
+                                                                epsilon(e)
+                                                                lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds no parameters constant*
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [3/2] approximant at the corresponding
+               kappa terms and parameters
+    """
     l = ps[0]
     d = ps[1]
     e = ps[2]
@@ -76,8 +167,31 @@ def pade_32(k, ps, cs):
 
 def ppade_42(k, ps, cs):
     """
-    Pade [4,2] in eqs.(10) and (11) has several typos
-    this is now the correct formula from the 2016 paper
+    This function calculates the pre-fit for the [4/2] Pade approximant
+    Pade [4/2] in eqs. (10) and (11) had several typos
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                delta(d)
+                                                                gamma(g)
+                                                                omega(w)
+                                                                lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds the following parameters constant*
+                                                                    alpha(a)
+                                                                    beta(b)
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [4/2] approximant at the corresponding
+               kappa terms and parameters
     """
 
     l = ps[3]
@@ -97,9 +211,33 @@ def ppade_42(k, ps, cs):
     return l * num / den
 
 def pade_42(k, ps, cs):
-    """ 
-    Pade [4,2] in eqs.(10) and (11) has several typos 
-    this is now the correct formula from the 2016 paper
+    """
+    This function calculates the [4/2] Pade approximant
+    Pade [4/2] in eqs. (10) and (11) had several typos
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                alpha(a)
+                                                                beta(b)
+                                                                delta(d)
+                                                                gamma(g)
+                                                                omega(w)
+                                                                lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds no parameters constant*
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [4/2] approximant at the corresponding
+               kappa terms and parameters
     """
     
     l = ps[3]
@@ -120,10 +258,33 @@ def pade_42(k, ps, cs):
 
 def ppade_52(k, ps, cs):
     """
-    Pade [5/2] based on notes from Roman Curik 
-    1/24/2020 & 1/30/2020
-    """
+    This function calculates the pre-fit for the [5/2] Pade approximant
+    Pade [5/2] based on notes from Roman Curik 1/24/2020 & 1/30/2020
 
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                delta(d)
+                                                                gamma(g)
+                                                                epsilon(e)
+                                                                omega(w)
+                                                                lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds the following parameters constant*
+                                                                    alpha(a)
+                                                                    beta(b)
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [5/2] approximant at the corresponding
+               kappa terms and parameters
+    """
     l = ps[4]
     e = ps[0]
     w = ps[1]
@@ -143,8 +304,33 @@ def ppade_52(k, ps, cs):
 
 def pade_52(k, ps, cs):
     """
-    Pade [5/2] based on notes from Roman Curik
-    1/24/2020 & 1/30/2020
+    This function calculates the [5/2] Pade approximant
+    Pade [5/2] based on notes from Roman Curik 1/24/2020 & 1/30/2020
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                alpha(a)
+                                                                beta(b)
+                                                                delta(d)
+                                                                gamma(g)
+                                                                epsilon(e)
+                                                                omega(w)
+                                                                lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds no parameters constant*
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [5/2] approximant at the corresponding
+               kappa terms and parameters
     """
 
     l = ps[4]
@@ -166,10 +352,34 @@ def pade_52(k, ps, cs):
 
 def pppade_53(k, ps, cs):
     """
-    Pade [5/3] based on notes from Roman Curik
-    1/24/2020 & 1/30/2020 
-    """
+    This function calculates the pre-pre-fit for the [5/3] Pade approximant
+    Pade [5/3] based on notes from Roman Curik 1/24/2020 & 1/30/2020
 
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                    epsilon(e)
+                                                                    zeta(z)
+                                                                    omega(w)
+                                                                    lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds the following parameters constant*
+                                                                    alpha(a)
+                                                                    beta(b)
+                                                                    delta(d)
+                                                                    gamma(g)
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [5/3] approximant at the corresponding
+               kappa terms and parameters
+    """
     l = ps[3]
     z = ps[0]
     e = ps[1]
@@ -190,8 +400,34 @@ def pppade_53(k, ps, cs):
 
 def ppade_53(k, ps, cs):
     """
-    Pade [5/3] based on notes from Roman Curik
-    1/24/2020 & 1/30/2020
+    This function calculates the pre-fit for the [5/3] Pade approximant
+    Pade [5/3] based on notes from Roman Curik 1/24/2020 & 1/30/2020
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                    delta(d)
+                                                                    gamma(g)
+                                                                    epsilon(e)
+                                                                    zeta(z)
+                                                                    omega(w)
+                                                                    lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds the following parameters constant*
+                                                                    alpha(a)
+                                                                    beta(b)
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [5/3] approximant at the corresponding
+               kappa terms and parameters
     """
 
     l = ps[5]
@@ -214,10 +450,35 @@ def ppade_53(k, ps, cs):
 
 def pade_53(k, ps, cs):
     """
-    Pade [5/3] based on notes from Roman Curik
-    1/24/2020 & 1/30/2020
-    """
+    This function calculates the [5/3] Pade approximant
+    Pade [5/3] based on notes from Roman Curik 1/24/2020 & 1/30/2020
 
+    PARAMETERS
+    −−−−−−−−−−
+    1. k : object
+                List of kappa terms
+    2. ps : object
+                List of parameters
+                *This function optimizes the following parameters*
+                                                                    alpha(a)
+                                                                    beta(b)
+                                                                    delta(d)
+                                                                    gamma(g)
+                                                                    epsilon(e)
+                                                                    zeta(z)
+                                                                    omega(w)
+                                                                    lambda(l)
+    3. cs : list
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
+                *This function holds no parameters constant*
+
+    RETURNS
+    -------
+    4. lamda : float
+               The evaluation of the Pade [5/3] approximant at the corresponding
+               kappa terms and parameters
+    """
     l = ps[5]
     z = ps[0]
     e = ps[1]
@@ -260,6 +521,29 @@ fs={"pade_21": pade_21,
 
 
 def chi(ps, xs, ys, sigmas, cs):
+    """
+    This function calculates the chi^2 value based on eq. (6)
+    See JCP 143, 184102 (2015)
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. ps : object
+                List of parameters
+    2. xs : object
+                List of kappa values
+    3. ys : object
+                List of lambda values
+    4. sigmas : object
+                Used to calculate the weights
+    5. cs : list
+                    List of parameters to be kept constant with the first term being
+                    the Pade approximant used
+
+    RETURNS
+    -------
+    6. chi2/len(xs) : float
+                          This corresponds to the chi^2 value from eq. (6)
+    """
     fn = fs[cs[0]]
     chi2 = 0
     ws = 1/sigmas**2
@@ -271,6 +555,34 @@ def chi(ps, xs, ys, sigmas, cs):
     			#changed sum(ws) to len(xs)
 
 def graph(ks, kps, lbs, lps, ps, cs, nplt, pr):
+    """
+    This function creates a graph of kappa values versus the lambda values for
+    use in determining if the program is function correctly
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. ks : object
+                List of kappas
+    2. kps : object
+                    Number of points used to make the curve seem smooth
+    3. lbs : object
+                 List of lambdas
+    4. lps : object
+                    Number of points used to make the curve seem smotth
+    5. ps : object
+                List of parameters
+    6. cs : list
+                    List of parameters to be kept constant with the first term being
+                    the Pade approximant used
+    7. nplt : object
+                    The number of points used to plot the respective graphs
+    8. pr : print level
+            probably take this one out
+
+    RETURNS
+    -------
+    9. None, but does produce graphs
+    """
     fn = fs[cs[0]]
     if pr > 4:        
         plt.plot(ks, lbs, marker='o', color='blue')
@@ -283,15 +595,53 @@ def graph(ks, kps, lbs, lps, ps, cs, nplt, pr):
         plt.show()
 
 def erG(aopt, bopt):
+    """
+    This function calculates the resonance energies and associated gamma values based
+    on eq. (5)
+    See JCP 143, 184102 (2015)
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. aopt : object
+                     The optimized alpha parameter
+    2. bopt : object
+                    The optimized beta parameter
+
+    RETURNS
+    -------
+    3. None, but appends the list of calculated resonance energies (Ers) and gammas (Gs)
+    """
     Er = bopt**2 - aopt**4
     G = 4*aopt**2*bopt
     Ers.append(Er)
     Gs.append(G)
 
 def getErs():
+    """
+    This function only returns the list of resonance energies
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. None
+
+    RETURNS
+    -------
+    4. The list of resonance energies
+    """
     return Ers
 
 def getGs():
+    """
+    This function only returns the list of gammas (resonance widths)
+
+    PARAMETERS
+    −−−−−−−−−−
+    1. None
+
+    RETURNS
+    -------
+    4. The list of gammas
+    """
     return Gs
 
 def select_energies(ls, Es, E_range, pr):

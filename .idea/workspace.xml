@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8d088553-2746-452a-80f4-99a294217b4e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/rac1.0.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rac.py" beforeDir="false" afterPath="$PROJECT_DIR$/rac.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rac2.0.py" beforeDir="false" afterPath="$PROJECT_DIR$/rac2.0.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rac_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/rac_utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -204,10 +207,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="445" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1584070473307" />
-    <state x="661" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1584069009500">
+    <state x="661" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1584967581730">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="661" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584069009500" />
+    <state x="661" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584967581730" />
     <state x="661" y="30" width="1038" height="979" key="dock-window-1" timestamp="1584067515864">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
