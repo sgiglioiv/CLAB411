@@ -9,3 +9,5 @@ rac2.0.py is Dr. Sommerfeld's original code with the print statements corrected.
 rac.py & rac_utils.py is most up-to-date version of the running code.
 
 rach.py & rach_utils.py are completely new code. The goal is to have better formulated code and to have it completely sourced with proper document strings.
+
+racb.py is the same as rac.py, using basinhopping rather than BFGS.
