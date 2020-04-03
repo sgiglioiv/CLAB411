@@ -17,23 +17,23 @@ Ers = []
 Gs = []
 chis = []
 
-
-def decorator_print(orginal_function):
+def decorator_print(original_function):
     """
     This function wraps another function to give it functionality to print or not
     """
-    def wrapper_function(*args, print_lev):
-        if mrk <= print_lev:
-            return origingal_function(*args)
+    def wrapper_function(*args, print_lev, mrk):
+        if print_lev <= mrk:
+            return original_function(*args)
     return wrapper_function
 
-##############################3
-def select_energies(ls, Es, E_range, pr):
+
+#######################################################
+def select_energies(ls, Es, E_range, print_lev):
     """ 
     select all energies in the first column that lie within E_range
     """
-    n_ene = numpy.shape(Es)[1]
-    n_ls = numpy.shape(ls)[0]
+    n_ene = np.shape(Es)[1]
+    n_ls = np.shape(ls)[0]
     print ("No. of lambda-points: ", n_ls)
     E_min = E_range[0]
     E_max = E_range[1]
@@ -60,7 +60,7 @@ def select_energies(ls, Es, E_range, pr):
     lbs = ls[i_max:i_min+1]
     print ("No. of points used:", len(lbs))
 
-    if pr > 3:
+    if print_lev >= 3:
         for i in range(n_ene):
             plt.plot(ls, Es[:,i], marker='d', color='orange')
         plt.plot(lbs, Ebs, marker='o', color='blue')
@@ -68,8 +68,7 @@ def select_energies(ls, Es, E_range, pr):
         plt.show()
 
     return lbs, Ebs
-##############################################33
-
+#######################################################
 
 def pade_21(kappas, params, con_params):
     """
@@ -92,13 +91,12 @@ def pade_21(kappas, params, con_params):
                The evaluation of the Pade [2/1] approximant at the corresponding
                kappa terms and parameters
     """
-    alpha_param = params[]
-    beta_param = params[]
-    lambda_param = params[]
+    alpha_param = params[0]
+    beta_param = params[1]
+    lambda_param = params[2]
     a4b2 = alpha_param * alpha_param * alpha_param * alpha_param + beta_param * beta_param
     aak2 = alpha_param * alpha_param * kappas * 2
     return lambda_param * (kappas * kappas + aak2 + a4b2) / (a4b2 + aak2)
-
 
 def pade_31(kappas, params, con_params):
     """
@@ -121,17 +119,16 @@ def pade_31(kappas, params, con_params):
                The evaluation of the Pade [3/1] approximant at the corresponding
                kappa terms and parameters
     """
-    alpha_param = params[]
-    beta_param = params[]
-    delta_param = params[]
-    lambda_param = params[]
+    alpha_param = params[0]
+    beta_param = params[1]
+    delta_param = params[2]
+    lambda_param = params[3]
     a4b2 = alpha_param * alpha_param * alpha_param * alpha_param + beta_param * beta_param
     aak2 = alpha_param * alpha_param * kappas * 2
     ddk = delta_param * delta_param * kappas
     num = (kappas * kappas + aak2 + a4b2) * (1 + ddk)
     den = a4b2 + aak2 + ddk * a4b2
     return lambda_param * num / den
-
 
 def pade_32(kappas, params, con_params):
     """
@@ -154,18 +151,17 @@ def pade_32(kappas, params, con_params):
                The evaluation of the Pade [3/2] approximant at the corresponding
                kappa terms and parameters
     """
-    alpha_param = params[]
-    beta_param = params[]
-    delta_param = params[]
-    epsilon_param = params[]
-    lambda_param = params[]
+    alpha_param = params[0]
+    beta_param = params[1]
+    delta_param = params[2]
+    epsilon_param = params[3]
+    lambda_param = params[4]
     a4b2 = alpha_param * alpha_param * alpha_param * alpha_param + beta_param * beta_param
     aak2 = alpha_param * alpha_param * kappas * 2
     ddk = delta_param * delta_param * kappas
     num = (kappas * kappas + aak2 + a4b2) * (1 + ddk)
     den = a4b2 + aak2 + ddk * a4b2 + epsilon_param * epsilon_param * kappas * kappas
     return lambda_param * num / den
-
 
 def pade_42(kappas, params, con_params):
     """
@@ -188,12 +184,12 @@ def pade_42(kappas, params, con_params):
                The evaluation of the Pade [4/2] approximant at the corresponding
                kappa terms and parameters
     """
-    alpha_param = params[]
-    beta_param = params[]
-    delta_param = params[]
-    gamma_param = params[]
-    lambda_param = params[]
-    omega_param = params[]
+    alpha_param = params[0]
+    beta_param = params[1]
+    delta_param = params[2]
+    gamma_param = params[3]
+    lambda_param = params[4]
+    omega_param = params[5]
     a4b2 = alpha_param * alpha_param * alpha_param * alpha_param + beta_param * beta_param
     g4d2 = gamma_param * gamma_param * gamma_param * gamma_param + delta_param * delta_param
     ta2 = 2 * alpha_param * alpha_param
@@ -203,7 +199,6 @@ def pade_42(kappas, params, con_params):
     num = (k2 + ta2 * kappas + a4b2) * (k2 + tg2 * kappas + g4d2)
     den = a4b2 * g4d2 + mu2 * kappas + omega_param * omega_param * k2
     return lambda_param * num / den
-
 
 def pade_52(kappas, params, con_params):
     """
@@ -226,13 +221,13 @@ def pade_52(kappas, params, con_params):
                The evaluation of the Pade [5/2] approximant at the corresponding
                kappa terms and parameters
     """
-    alpha_param = params[]
-    beta_param = params[]
-    delta_param = params[]
-    epsilon_param = params[]
-    gamma_param = params[]
-    lambda_param = params[]
-    omega_param = params[]
+    alpha_param = params[0]
+    beta_param = params[1]
+    delta_param = params[2]
+    epsilon_param = params[3]
+    gamma_param = params[4]
+    lambda_param = params[5]
+    omega_param = params[6]
     a4b2 = alpha_param * alpha_param * alpha_param * alpha_param + beta_param * beta_param
     g4d2 = gamma_param * gamma_param * gamma_param * gamma_param + delta_param * delta_param
     ta2 = 2 * alpha_param * alpha_param
@@ -245,7 +240,6 @@ def pade_52(kappas, params, con_params):
                                                                      kappas)
     den = a4b2 * g4d2 + mu2 * kappas + omega_param * omega_param * k2
     return lambda_param * num / den
-
 
 def pade_53(kappas, params, con_params):
     """
@@ -267,14 +261,14 @@ def pade_53(kappas, params, con_params):
                The evaluation of the Pade [5/3] approximant at the corresponding
                kappa terms and parameters
     """
-    alpha_param = params[]
-    beta_param = params[]
-    delta_param = params[]
-    epsilon_param = params[]
-    zeta_param = params[]
-    gamma_param = params[]
-    lambda_param = params[]
-    omega_param = params[]
+    alpha_param = params[0]
+    beta_param = params[1]
+    delta_param = params[2]
+    epsilon_param = params[3]
+    zeta_param = params[4]
+    gamma_param = params[5]
+    lambda_param = params[6]
+    omega_param = params[7]
     a4b2 = alpha_param * alpha_param * alpha_param * alpha_param + beta_param * beta_param
     g4d2 = gamma_param * gamma_param * gamma_param * gamma_param + delta_param * delta_param
     ta2 = 2 * alpha_param * alpha_param
@@ -289,12 +283,10 @@ def pade_53(kappas, params, con_params):
           omega_param * kappas * k2
     return lambda_param * num / den
 
-
-funcs={
-    """
-    Dictionary of the functions to be used
-    """
-       "pade_21": pade_21,
+"""
+Dictionary of the functions to be used
+"""
+funcs = {"pade_21": pade_21,
        "pade_31": pade_31,
        "pade_32": pade_32,
        "pade_42": pade_42,
@@ -303,7 +295,7 @@ funcs={
        }
 
 
-def chi(params, kappas, lbs, sigmas, con_params):
+def chi(params, kappas, lambdas, sigmas, con_params):
     """
          This function calculates the chi^2 value based on eq. (6)
          See JCP 143, 184102 (2015)
@@ -314,7 +306,7 @@ def chi(params, kappas, lbs, sigmas, con_params):
                 List of parameters
     2. kappas : object
                 List of kappa values
-    3. lambas : object
+    3. lambdas : object
                 List of lambda values
     4. sigmas : object
                 Used to calculate the weights
@@ -332,17 +324,14 @@ def chi(params, kappas, lbs, sigmas, con_params):
     weights = 1 / sigmas**2
     for i in range(len(kappas)):
         chi2 += ((lambdas[i] - fn(kappas[i], params, con_params[1:])) * weights[i])**2
-    return (chi2/len(kappas))
-
+    return chi2/len(kappas)
+########################################################
 
 @decorator_print
-def display(orignial_function):
-    def wrapper_function(*args, pr):
-        if mrk <= pr:
-            return original_function(*args)
-    return wrapper_function
+def display(message):
+    print(message)
 
-@decorater_print
+@decorator_print
 def pregraph(n_ene, lambdas, energys, msg):
     for i in range(n_ene):
         plt.plot(lambdas, energys[:,i], marker= 'd', color= 'orange')
@@ -350,7 +339,7 @@ def pregraph(n_ene, lambdas, energys, msg):
     plt.show()
 
 @decorator_print
-def graph(kappas, kap_points, lambdas, lam_points, params, con_params, point_plot, pr):
+def graph(kappas, kap_points, lambdas, lam_points, params, con_params, point_plot):
     """
         This function creates a graph of kappa values versus the lambda values for
         use in determining if the program is function correctly
@@ -360,20 +349,20 @@ def graph(kappas, kap_points, lambdas, lam_points, params, con_params, point_plo
     1. kappas : object
                 List of kappas
     2. kap_points : object
-                    Number of points used to make the curve seem smooth
+                Number of points used to make the curve seem smooth
     3. lambdas : object
-                 List of lambdas
+                List of lambdas
     4. lam_points : object
-                    Number of points used to make the curve seem smotth
+                Number of points used to make the curve seem smotth
     5. params : object
                 List of parameters
     6. con_params : list
-                    List of parameters to be kept constant with the first term being
-                    the Pade approximant used
+                List of parameters to be kept constant with the first term being
+                the Pade approximant used
     7. point_plot : object
-                    The number of points used to plot the respective graphs
+                The number of points used to plot the respective graphs
     8. pr : print level
-            probably take this one out
+                Optional argument based on the desired print level
 
     RETURNS
     -------
@@ -381,14 +370,14 @@ def graph(kappas, kap_points, lambdas, lam_points, params, con_params, point_plo
     """
     fn = funcs[con_params[0]]
     plt.plot(kappas, lambdas, marker='o', color='blue')
-        for i in range(point_plot):
-            lam_points[i]=fn(kap_points[i], params, con_params[1:])
-        plt.plot(kappas, lambdas, marker='', color="orange")
-        plt.xlabel('kappa')
-        plt.ylabel('lambda')
-        plt.title(cs[0])
-        plt.show()
-
+    for i in range(point_plot):
+        lam_points[i] = fn(kap_points[i], params, con_params[1:])
+    plt.plot(kappas, lambdas, marker='', color="orange")
+    plt.xlabel('kappa')
+    plt.ylabel('lambda')
+    plt.title(con_params[0])
+    plt.show()
+##########################################################
 
 def res_eng(alpha_param, beta_param):
     """
@@ -412,8 +401,33 @@ def res_eng(alpha_param, beta_param):
     Ers.append(Er)
     Gs.append(G)
 
+def chi2s(params, kappas, lambdas, sigmas, con_params):
+    """
+    This function creates a list of the chi2 values
 
-def getErs():
+    PARAMETERS
+    −−−−−−−−−−
+    1. params : object
+                List of parameters
+    2. kappas : object
+                List of kappa values
+    3. lambdas : object
+                List of lambda values
+    4. sigmas : object
+                Used to calculate the weights
+    5. con_params : list
+                    List of parameters to be kept constant with the first term being
+                    the Pade approximant used
+
+    RETURNS
+    -------
+    6. None
+    """
+    chi2 = chi(params, kappas, lambdas, sigmas, con_params)
+    chis.append(chi2)
+    return chi2
+
+def get_ers():
     """
     This function only returns the list of resonance energies
 
@@ -423,12 +437,11 @@ def getErs():
 
     RETURNS
     -------
-    4. The list of resonance energies
+    2. The list of resonance energies
     """
     return Ers
 
-
-def getGs():
+def get_gs():
     """
     This function only returns the list of gammas
 
@@ -438,13 +451,12 @@ def getGs():
 
     RETURNS
     -------
-    4. The list of gammas
+    2. The list of gammas
     """
     return Gs
 
-"""
-def getchis():
-    ""
+def get_chis():
+    """
     This function only returns the list of gammas
 
     PARAMETERS
@@ -453,7 +465,7 @@ def getchis():
 
     RETURNS
     -------
-    4. The list of gammas
-    ""
+    2. The list of gammas
+    """
     return chis
-"""
+
