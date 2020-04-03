@@ -11,6 +11,7 @@ see JCP 143, 184102 (2015)
 import argparse
 import numpy
 from scipy.optimize import minimize
+from scipy.optimize import basinhopping
 import matplotlib.pyplot as plt
 import rac_utils as racu
 def main():
@@ -118,7 +119,7 @@ def rac(ls, Es, E_range, guess, pr):
     ps= [lg, ag, bg]
     cs= ["pade_21"]
     if pr > 2:
-        print ("[2,1] Guess l, a, b = ", ps) 
+        print ("[2,1] Guess l, a, b = ", ps)
     res = minimize(racu.chi, ps, args=(ks, lbs, sigmas, cs), method='BFGS', options={'gtol': 1e-6})
     ps = res.x
     if pr > 2:
